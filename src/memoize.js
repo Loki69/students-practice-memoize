@@ -14,7 +14,7 @@ function memoize(func) {
   					}
 			},
 			calculatedNumbersKey: function (elementId) {
-  					return Array.prototype.slice.call(elementId).join('');
+  					return Array.prototype.slice.call(elementId).join(',');
 			}
 			
 		};
