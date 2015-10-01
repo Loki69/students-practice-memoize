@@ -14,15 +14,12 @@ function memoize(func) {
   					}
 			},
 			calculatedNumbersKey: function (elementId) {
-				console.log(Array.prototype.slice.call(elementId).join(''));
   					return Array.prototype.slice.call(elementId).join('');
 			}
 			
 		};
 	var myFunction = function(){
 			if(myCahce.getValue(arguments) === undefined){
-				console.log('undefined');
-				console.log(arguments);
 				myCahce.add(arguments,func.apply(this,arguments));
 			}
 			return myCahce.getValue(arguments);
