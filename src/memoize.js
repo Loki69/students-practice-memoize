@@ -8,49 +8,49 @@ function memoize(func) {
 		key: [],
 		values: [],
 		add: function(elementId, valueElecment) {
-			this.key.push(this.calKey(elementId));
+			this.key.push(this.generateKey(elementId));
 			this.values.push(valueElecment);
 		},
 		getValue: function(elementId) {
 			if (this.key.indexOf) {
-				return this.values[this.getIdKey(elementId)];
+				return this.values[this.getIndexKey(elementId)];
 			}
 		},
-		calKey: function(elementId) {
+		generateKey: function(elementId) {
 			var myvar = "";
 			if (elementId.length === 0) {
 				myvar += "empty arguments";
 			} else {
 				for (var i = 0; i < elementId.length; i++) {
-					myvar += this.generateCahe(elementId[i]);
+					myvar += this.typeGenerateKey(elementId[i]);
 				}
 			}
 			return myvar;
 		},
-		generateCahe: function(element) {
+		typeGenerateKey: function(element) {
 			switch (typeof(element)) {
 				case "object":
-					return this.calculatedForObjectTypes(element);
+					return this.generateKeyForObjectTypes(element);
 				case "undefined":
 					return "undefined:{}";
 				default:
-					return this.calculatedForScalarTypes(element);
+					return this.generateKeyForScalarTypes(element);
 			}
 		},
-		calculatedForObjectTypes: function(typeObject) {
+		generateKeyForObjectTypes: function(typeObject) {
 			var cahe = "";
 			if (typeObject) {
 				for (var arg in typeObject) {
 					cahe += arg;
 					cahe += ":";
-					cahe += this.generateCahe(typeObject[arg]);
+					cahe += this.typeGenerateKey(typeObject[arg]);
 				}
 			} else {
 				cahe += "null:{}";
 			}
 			return cahe;
 		},
-		calculatedForScalarTypes: function(typeScalar) {
+		generateKeyForScalarTypes: function(typeScalar) {
 			var cahe = "";
 			cahe += typeof(typeScalar);
 			cahe += ":{";
@@ -59,10 +59,10 @@ function memoize(func) {
 			return cahe;
 		},
 		containsKey: function(elementId) {
-			return this.getIdKey(elementId) === -1;
+			return this.getIndexKey(elementId) === -1;
 		},
-		getIdKey: function(elementId) {
-			return this.key.indexOf(this.calKey(elementId));
+		getIndexKey: function(elementId) {
+			return this.key.indexOf(this.generateKey(elementId));
 		},
 	};
 	var myFunction = function() {
